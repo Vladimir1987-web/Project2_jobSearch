@@ -3,7 +3,7 @@
 Данная программа получает информацию о вакансиях с платформы hh.ru в России, сохраняет ее в файл и позволяет удобно работать с ней: добавлять, фильтровать, удалять.
 ## Установка:
 1. Клонируйте репозиторий:
-```git clone https://github.com/Vladimir1987-web/Development-training.git```
+```git clonehttps://github.com/Vladimir1987-web/Project2_jobSearch```
 2. Установите зависимости:
 ```pip install -r requirements.txt```
 ## Использование:
