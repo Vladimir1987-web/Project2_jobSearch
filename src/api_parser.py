@@ -25,8 +25,7 @@ class HeadHunterAPI(Parser):
         self.__url = 'https://api.hh.ru/vacancies'
         self.__headers = {'User-Agent': 'HH-User-Agent'}
         self.__params = {'text': '', 'page': 0, 'per_page': 100}
-        #self.__vacancies = []
-        #super().__init__(file_worker)
+
 
     def _API_connections(self):
         """ Метод подключения к API """
@@ -37,21 +36,15 @@ class HeadHunterAPI(Parser):
         """ Метод получения данных """
         self.__params['text'] = keyword # Устанавливаем ключевое слово
         self.__params['per_page'] = 100  # Устанавливаем количество элементов на страницу
-        while self.__params.get('page') != 20:
+        while self.__params.get('page') != 10:
             response = self._API_connections() # Вызов метода подключения
 
             if response.status_code == 200:
                 # Если ответ успешный, обрабатываем данные
                 vacancies = response.json()['items']
-                #self.__vacancies.extend(vacancies)
                 self.__params['page'] += 1
             else:
                 # Если ответ не успешный, выводим сообщение об ошибке и прекращаем цикл
                 print(f"Ошибка: статус-код {response.status_code}")
                 break
         return vacancies
-
-
-hh_api = HeadHunterAPI()
-hh_vacancies = hh_api.get_vacancies("Python Developer")
-print(hh_vacancies)
