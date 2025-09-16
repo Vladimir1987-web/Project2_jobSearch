@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 import requests
 
 
@@ -6,13 +7,14 @@ import requests
 class Parser(ABC):
     @abstractmethod
     def _API_connections(self, *args, **kwargs):
-        """ Метод для отправки API-запроса."""
+        """Метод для отправки API-запроса."""
         pass
 
     @abstractmethod
     def get_vacancies(self, *args, **kwargs):
         """Метод для получения вакансий"""
         pass
+
 
 class HeadHunterAPI(Parser):
     """
@@ -22,27 +24,25 @@ class HeadHunterAPI(Parser):
 
     def __init__(self):
         self.emp = None
-        self.__url = 'https://api.hh.ru/vacancies'
-        self.__headers = {'User-Agent': 'HH-User-Agent'}
-        self.__params = {'text': '', 'page': 0, 'per_page': 100}
-
+        self.__url = "https://api.hh.ru/vacancies"
+        self.__headers = {"User-Agent": "HH-User-Agent"}
+        self.__params = {"text": "", "page": 0, "per_page": 100}
 
     def _API_connections(self):
-        """ Метод подключения к API """
+        """Метод подключения к API"""
         return requests.get(self.__url, headers=self.__headers, params=self.__params)
 
-
     def get_vacancies(self, keyword: str) -> None:
-        """ Метод получения данных """
-        self.__params['text'] = keyword # Устанавливаем ключевое слово
-        self.__params['per_page'] = 100  # Устанавливаем количество элементов на страницу
-        while self.__params.get('page') != 10:
-            response = self._API_connections() # Вызов метода подключения
+        """Метод получения данных"""
+        self.__params["text"] = keyword  # Устанавливаем ключевое слово
+        self.__params["per_page"] = 1  # Устанавливаем количество элементов на страницу
+        while self.__params.get("page") != 1:
+            response = self._API_connections()  # Вызов метода подключения
 
             if response.status_code == 200:
                 # Если ответ успешный, обрабатываем данные
-                vacancies = response.json()['items']
-                self.__params['page'] += 1
+                vacancies = response.json()["items"]
+                self.__params["page"] += 1
             else:
                 # Если ответ не успешный, выводим сообщение об ошибке и прекращаем цикл
                 print(f"Ошибка: статус-код {response.status_code}")

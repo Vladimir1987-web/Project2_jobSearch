@@ -1,10 +1,11 @@
 from src.api_parser import HeadHunterAPI
 from src.file_worker import JsonFileWorker
-from src.vacancy import Vacancy
 from src.utils import sort_vacancies
+from src.vacancy import Vacancy
 
 
 def main():
+    """Функция взаимодействия с пользователем"""
     # Создание экземпляра класса для работы с API сайтов с вакансиями
     hh_api = HeadHunterAPI()
     json_file_worker = JsonFileWorker()
@@ -30,4 +31,5 @@ def main():
         print(vacancy)
 
 
-main()
+if __name__ == "__main__":
+    main()
